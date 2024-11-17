@@ -1,0 +1,64 @@
+// Import necessary libraries (Assume Pi SDK is installed)
+const Pi = require('pi-network');
+
+// Initialize Pi SDK
+Pi.init({
+  apiKey: 'lzaiatfogjkbyvc8kgn2ti3hfhb3inn6turcci41022bdfztkx8ie1hajj2wbdss
+', // Replace with your actual API key from Pi Network
+});
+
+// Create an escrow function
+async function createEscrow({ payer, payee, amount, description }) {
+  try {
+    const transaction = await Pi.createTransaction({
+      userId: payer, // User initiating the escrow
+      amount,
+      metadata: {
+        payee, // Recipient of funds
+        description, // Purpose of escrow
+      },
+    });
+    console.log('Escrow created successfully:', transaction);
+    return transaction;
+  } catch (error) {
+    console.error('Error creating escrow:', error);
+  }
+}
+
+// Function to release escrow
+async function releaseEscrow(transactionId) {
+  try {
+    const result = await Pi.releaseTransaction(transactionId);
+    console.log('Escrow released successfully:', result);
+    return result;
+  } catch (error) {
+    console.error('Error releasing escrow:', error);
+  }
+}
+
+// Function to cancel escrow
+async function cancelEscrow(transactionId) {
+  try {
+    const result = await Pi.cancelTransaction(transactionId);
+    console.log('Escrow canceled successfully:', result);
+    return result;
+  } catch (error) {
+    console.error('Error canceling escrow:', error);
+  }
+}
+
+// Example Usage
+(async () => {
+  // Step 1: Create Escrow
+  const transaction = await createEscrow({
+    payer: 'user1',
+    payee: 'user2',
+    amount: 100,
+    description: 'Payment for freelance project',
+  });
+
+  // Step 2: Release Escrow
+  if (transaction && transaction.status === 'Pending') {
+    await releaseEscrow(transaction.id);
+  }
+})();
