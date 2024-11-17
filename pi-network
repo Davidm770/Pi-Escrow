@@ -3,8 +3,7 @@ const Pi = require('pi-network');
 
 // Initialize Pi SDK
 Pi.init({
-  apiKey: 'lzaiatfogjkbyvc8kgn2ti3hfhb3inn6turcci41022bdfztkx8ie1hajj2wbdss
-', // Replace with your actual API key from Pi Network
+  apiKey: 'YOUR_API_KEY', // Replace with your actual API key from Pi Network
 });
 
 // Create an escrow function
